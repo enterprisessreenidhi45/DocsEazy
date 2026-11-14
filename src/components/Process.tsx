@@ -5,7 +5,7 @@ export function Process() {
     <section className="on-navy ledger bg-navy text-paper">
       <div className="mx-auto max-w-6xl px-5 py-20">
         <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          How it works
+          How it works 
         </h2>
         <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {processSteps.map((step, index) => (
