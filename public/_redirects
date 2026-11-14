@@ -1,0 +1,4 @@
+# Old WordPress URLs. Netlify defaults to 301 unless told otherwise (Cloudflare's own
+# default was 302, which is why this always stated the code explicitly).
+/faq/           /#faq      301
+/appointments/  /contact/  301

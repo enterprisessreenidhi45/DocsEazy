@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Matches the old WordPress URLs via public/_redirects (copied into "out" by the build).
+# Netlify reads that file from the publish directory directly, nothing extra needed here.
