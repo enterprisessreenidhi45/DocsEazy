@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0f2340;
+  --color-navy-deep: #0a1830;
+  --color-navy-soft: #1b3558;
+  --color-amber: #efa92f;
+  --color-amber-light: #f7c56c;
+  /* Amber fails contrast as text on paper. Use this shade for text instead. */
+  --color-amber-deep: #8f5400;
+  --color-paper: #fbf7ef;
+  --color-paper-dim: #f2ebdd;
+  /* Teal accents, used only on the internal admin screens (not the public marketing site). */
+  --color-teal: #1aa4bd;
+  --color-teal-light: #7fd4e2;
+  --color-teal-deep: #0e6f82;
+  --color-ink: #1a2433;
+  --color-muted: #545f6d;
+  --color-line: #e0d8c8;
+  --color-whatsapp: #25d366;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+
+  --shadow-sheet: 0 24px 50px -20px rgb(4 12 28 / 0.65);
+}
+
+html {
+  /* No global `scroll-behavior: smooth` here on purpose: Next.js resets scroll position on
+     every page navigation by calling scrollTo(0, 0) with an unspecified ("auto") behavior,
+     which per spec then obeys this CSS property. With smooth scrolling on, that reset
+     becomes an animated scroll that the next page's paint can interrupt, landing the new
+     page already part-scrolled instead of at the top. Nothing in this site currently
+     depends on smooth same-page anchor scrolling (no in-app "#" links), so it's left off
+     entirely rather than fought around. */
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber-deep);
+  outline-offset: 2px;
+}
+
+.on-navy :focus-visible {
+  outline-color: var(--color-amber);
+}
+
+/* Form fields show focus through their own border colour (set per field), not the global
+   outline above. This unlayered, higher-specificity rule beats Tailwind's focus:outline-none
+   utility, which the unlayered :focus-visible rule would otherwise override. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+/* The folder tab on service cards */
+.file-card::before {
+  content: "";
+  position: absolute;
+  top: -0.6rem;
+  left: -1px;
+  width: 42%;
+  height: 0.7rem;
+  background: inherit;
+  border: 1px solid var(--color-line);
+  border-bottom: 0;
+  border-radius: 0.5rem 0.75rem 0 0;
+  transition: background-color 0.2s;
+}
+
+.file-card:hover::before {
+  background: var(--color-amber);
+  border-color: var(--color-amber);
+}
+
+/* Faint ruled-ledger lines behind navy sections */
+.ledger {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 39px,
+    rgb(255 255 255 / 0.035) 39px 40px
+  );
+}
+
+summary {
+  list-style: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Animates the native <details>, so the FAQ needs no JavaScript. A browser without
+   ::details-content skips this block and simply opens the answer instantly. */
+.faq-item::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease-out,
+    content-visibility 0.3s allow-discrete;
+}
+
+.faq-item[open]::details-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content {
+    transition: none;
+  }
+}
