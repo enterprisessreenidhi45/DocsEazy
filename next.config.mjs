@@ -7,6 +7,9 @@ const nextConfig = {
   // Hides the dev-mode corner badge (Next.js logo, bottom left). Dev only; a static
   // export never ships it regardless.
   devIndicators: false,
+  experimental: {
+    agentUpgrade: "security",
+  },
 };
 
 export default nextConfig;
