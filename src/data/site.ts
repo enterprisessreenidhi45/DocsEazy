@@ -9,7 +9,7 @@ export const site = {
   // TODO(owner): confirm WhatsApp uses the same number as the phone line.
   whatsappNumber: "919343794351",
   email: "info@docseazy.com",
-  addressLines: ["Mahakavi Vemana Rd, Koramangala 3 Block", "BDA Complex, Bengaluru 560034"],
+  addressLines: ["Shop Number 58, Mahakavi Vemana Rd, Koramangala 3 Block", "BDA Complex, Bengaluru 560034"],
   hours: "Open 7 days, 9:00 AM to 8:00 PM",
 };
 
@@ -99,6 +99,6 @@ export const faqs = [
   },
   {
     q: "Which services do you handle?",
-    a: "Birth, marriage and death certificates, change of name, notary and affidavits, property registration, PAN, passport, visa, GPA, rental agreements, driving licence, attestation and sale deeds.",
+    a: "Birth, marriage and death certificates, gazette notification for name change, notary and affidavits, property registration, PAN, passport, visa, GPA, rental agreements, e-stamp paper, attestation and sale deeds.",
   },
 ];

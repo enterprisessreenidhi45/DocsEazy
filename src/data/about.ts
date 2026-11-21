@@ -77,9 +77,6 @@ export const commitment = [
 /**
  * The person behind the business, shown in the hero and in "Our story".
  *
- * TODO(owner): CONFIRM THE NAME. "[Founder's name]" below is a placeholder — not a real
- * claim — standing in only until the name is confirmed. Replace it (and `initials`) with
- * the exact spelling to use publicly, then this page is ready to launch.
  * To remove the founder section entirely instead, set `founder` back to `null`; the page
  * falls back to an honest, nameless "Sreenidhi Enterprises" treatment.
  */
@@ -92,12 +89,12 @@ export type Founder = {
 };
 
 export const founder: Founder | null = {
-  name: "[Founder's name]",
+  name: "B D Krishna",
   role: "Founder",
-  initials: "SE",
+  initials: "BK",
   photo: "/founder.jpg",
   bio: [
-    `[Founder's name] has led ${site.legalName} from the same desk in Koramangala since ${site.foundedYear}, helping customers get government and legal paperwork done without the runaround.`,
+    `B D Krishna has led ${site.legalName} from the same desk in Koramangala since ${site.foundedYear}, helping customers get government and legal paperwork done without the runaround.`,
     "Every request is still looked at personally: the cost is explained up front, and you are kept updated by WhatsApp or email until your documents are in your hands.",
   ],
 };

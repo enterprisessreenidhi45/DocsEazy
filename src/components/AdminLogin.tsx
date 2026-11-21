@@ -279,7 +279,7 @@ export function AdminLogin() {
                       form: "Self-serve password reset isn't set up yet — ask the developer to reset it directly.",
                     })
                   }
-                  className="text-sm font-semibold text-teal-deep hover:underline"
+                  className="-my-1 py-1 text-sm font-semibold text-teal-deep hover:underline"
                 >
                   Forgot password?
                 </button>
@@ -306,7 +306,10 @@ export function AdminLogin() {
             </form>
 
           <div className="mt-6 border-t border-line pt-5 text-center">
-            <Link href="/" className="text-sm font-semibold text-amber-deep hover:text-navy">
+            <Link
+              href="/"
+              className="-my-1 inline-block py-1 text-sm font-semibold text-amber-deep hover:text-navy"
+            >
               Back to the website
             </Link>
           </div>

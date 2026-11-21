@@ -16,10 +16,10 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 
 ## Business facts (single source of truth: `src/data/site.ts`)
 
-- Phone `+91 93437 94351`, email `info@docseazy.com`, address Mahakavi Vemana Rd, Koramangala 3 Block, BDA Complex, Bengaluru 560034. Open 7 days, 9am–8pm.
+- Phone `+91 93437 94351`, email `info@docseazy.com`, address Shop Number 58, Mahakavi Vemana Rd, Koramangala 3 Block, BDA Complex, Bengaluru 560034. Open 7 days, 9am–8pm.
 - WhatsApp number currently assumed same as phone — **unconfirmed with owner**.
 - Stats (20,000+ clients, 25+ team, 20+ services), "why choose us" reasons, process steps and testimonials are carried over from the current site (unsupported claims like "lowest price" dropped) — all flagged `TODO(owner)` for reconfirmation.
-- 14 services live in `src/data/services.ts`.
+- 14 services live in `src/data/services.ts` (Driving Licence dropped; E-Stamp Paper added; the "Change of Name" card is now named "Gazette Notification", slug kept as `change-of-name`).
 
 ## Site structure
 
@@ -32,10 +32,10 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 ## Build order / status
 
 1. ✅ Home — done.
-2. ✅ About (`/about-us/`) — done, except the founder's real name is still a placeholder (`"[Founder's name]"` in `src/data/about.ts`) — **blocking launch of that section**.
+2. ✅ About (`/about-us/`) — done; founder name confirmed as B D Krishna in `src/data/about.ts`.
 3. ✅ Contact (`/contact/`) — hero contact card, map embed, enquiry form (`EnquiryForm.tsx`).
-4. ⬜ Services index + 14 service pages (from `src/data/services.ts`) — **not yet built**.
-5. ⬜ Privacy page — not yet built.
+4. 🔶 Services index (`/services/`) — done: every service as a card with an anchor (`id` = slug) and a "Contact us for this document" link to `/contact/#enquiry`. Individual service pages are **not built**: `serviceHref()` points at `/services/#<slug>`, and `public/_redirects` sends the old site's six service URLs to those anchors. If service pages are built later, change `serviceHref()` back and drop those six redirects.
+5. ⬜ Privacy page — not yet built; its footer link was removed so it doesn't 404. Re-add the link in `Footer.tsx` with the page.
 6. ⬜ Appwrite backend + notifications — not yet wired.
 7. 🔶 Admin area — login + dashboard UI built with a **temporary demo auth** (see below); real backend not wired.
 
@@ -57,7 +57,7 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 - Meta Business account + a spare alerts number for WhatsApp template messages, or launch notifications on email/Telegram only first (template approval can take days — start early if wanted)?
 - One alert recipient or several?
 - Who controls the domain/DNS (possibly the old agency, Web Rankey)?
-- Confirm: founder's real name, `about.ts` mission/vision wording, the stats/reasons/testimonials carried over from the old site, map pin accuracy on Contact.
+- Confirm: `about.ts` mission/vision wording, the stats/reasons/testimonials carried over from the old site, map pin accuracy on Contact.
 
 ## Known constraints / gotchas worth remembering
 
@@ -65,6 +65,8 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 - Year/years-in-business must be computed client-side via `LiveYear` — a static build freezes build-time dates.
 - `globals.css` has an **unlayered** `:focus-visible` outline rule that beats Tailwind's layered `focus:outline-none` — relevant if touching focus styles anywhere.
 - Python is not installed in this environment; use Node for any scripting/verification.
+- `npm run build` runs `postbuild` → `scripts/fix-export-prefetch.mjs`, working around a Next.js 16.4 static-export bug (segment prefetch files written as `__next.X/__PAGE__.txt` but requested as `__next.X.__PAGE__.txt`). It skips existing files, so it's harmless once Next fixes it.
+- Mobile action-bar clearance lives on the footer (`pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0`), not on `<main>` — on `<main>` it opened a strip of page background between the last divider and the footer. `SectionDivider` hides its two translucent layers below `sm` (they collapse into a grey stripe at 40px tall).
 
 ## Where to look for more detail
 

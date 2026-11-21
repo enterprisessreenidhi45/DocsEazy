@@ -2,3 +2,11 @@
 # default was 302, which is why this always stated the code explicitly).
 /faq/           /#faq      301
 /appointments/  /contact/  301
+
+# The old site's service pages. Each now lives as a card on /services/.
+/marriage-certificate/   /services/#marriage-certificate   301
+/property-registration/  /services/#property-registration  301
+/notary-affidavit/       /services/#notary-affidavit       301
+/birth-certificate/      /services/#birth-certificate      301
+/change-of-name/         /services/#change-of-name         301
+/death-certificate/      /services/#death-certificate      301

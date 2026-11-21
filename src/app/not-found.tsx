@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main className="pb-14 md:pb-0">
+      <main>
         <section className="mx-auto max-w-2xl px-5 py-24 text-center">
           <h1 className="font-display text-4xl font-semibold text-navy">
             We could not find that page

@@ -13,8 +13,11 @@ export function Footer() {
     { icon: Mail, content: site.email, href: `mailto:${site.email}` },
   ];
 
+  // The bottom padding clears the fixed MobileActionBar (h-14 plus the safe area). It lives
+  // here, not on <main>, so the clearance is painted footer navy instead of opening a strip
+  // of page background between the last section divider and the footer.
   return (
-    <footer className="on-navy bg-navy-deep text-paper/80">
+    <footer className="on-navy bg-navy-deep pb-[calc(3.5rem+env(safe-area-inset-bottom))] text-paper/80 md:pb-0">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <Logo onNavy />
@@ -58,11 +61,6 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/privacy/" className="hover:text-paper">
-                Privacy
-              </Link>
-            </li>
             <li>
               <Link href="/admin/" className="hover:text-paper">
                 Admin

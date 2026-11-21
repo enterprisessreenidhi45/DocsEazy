@@ -11,6 +11,11 @@
  * below instead bulges from the bottom up into the section above. Alternating it down a page
  * (first seam unrotated, the rest rotated) keeps every seam reading like the same shape
  * rather than a plain mirror of itself.
+ *
+ * Below `sm` the divider is only 40px tall, which squeezes the two translucent layers into a
+ * thin muddy stripe that reads as a gap between the sections, so phones get the opaque wave
+ * alone. The SVG also hangs 1px past its clipping wrapper so a fractional device-pixel edge
+ * can never leave a hairline of the `from` colour above the next section.
  */
 export function SectionDivider({
   from,
@@ -28,15 +33,15 @@ export function SectionDivider({
       <svg
         viewBox="0 0 1000 100"
         preserveAspectRatio="none"
-        className={`block h-10 w-full sm:h-16 md:h-20 ${rotate ? "rotate-180" : ""}`}
+        className={`-mb-px block h-10 w-full sm:h-16 md:h-20 ${rotate ? "rotate-180" : ""}`}
       >
         <path
-          className={to}
+          className={`${to} max-sm:hidden`}
           opacity=".5"
           d="M0 0v100c166.7 0 166.7-66 333.3-66S500 77 666.7 77 833.3 28 1000 28V0H0Z"
         />
         <path
-          className={to}
+          className={`${to} max-sm:hidden`}
           opacity=".5"
           d="M0 0v100c166.7 0 166.7-66 333.3-66S500 70 666.7 70 833.3 16 1000 16V0H0Z"
         />

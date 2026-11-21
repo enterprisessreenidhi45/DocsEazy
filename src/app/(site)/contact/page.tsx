@@ -47,7 +47,10 @@ function ContactCard() {
                   {label}
                 </span>
                 {href ? (
-                  <a href={href} className="font-medium break-words text-navy hover:text-amber-deep">
+                  <a
+                    href={href}
+                    className="-my-1 inline-block py-1 font-medium break-words text-navy hover:text-amber-deep"
+                  >
                     {value}
                   </a>
                 ) : (

@@ -1,17 +1,12 @@
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import { nav, site, whatsappHref } from "@/data/site";
-import { serviceHref, services } from "@/data/services";
 import { WhatsAppIcon } from "./ContactButtons";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { NavLinks } from "./NavLinks";
 
-// Service pages sit at the root (/passport/), so the nav has to be told they belong to Services.
-const navItems = nav.map((item) => ({
-  ...item,
-  matches: item.href === "/services/" ? [item.href, ...services.map(serviceHref)] : [item.href],
-}));
+const navItems = nav.map((item) => ({ ...item, matches: [item.href] }));
 
 // A plain, always-solid header: sticky on top of the page, no scroll-driven blur or
 // transparency. Simpler and reads reliably over every section colour (navy hero, paper

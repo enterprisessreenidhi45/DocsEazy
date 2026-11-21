@@ -2,22 +2,25 @@ import {
   Baby,
   BadgeCheck,
   BookUser,
-  Car,
   CreditCard,
   Flower2,
   Gem,
   Handshake,
   KeyRound,
   Landmark,
-  PenLine,
+  Newspaper,
   Plane,
+  Receipt,
   ScrollText,
   Stamp,
   type LucideIcon,
 } from "lucide-react";
 
 export type Service = {
-  /** Also the URL. The first six match the old site's URLs, so existing links keep working. */
+  /**
+   * The card's anchor on /services/. The first six were the old site's page URLs;
+   * public/_redirects sends those to their anchors so existing links keep working.
+   */
   slug: string;
   name: string;
   summary: string;
@@ -64,9 +67,9 @@ export const services: Service[] = [
   },
   {
     slug: "change-of-name",
-    name: "Change of Name",
-    summary: "Paperwork for changing your name.",
-    icon: PenLine,
+    name: "Gazette Notification",
+    summary: "Official Gazette notification for your name change.",
+    icon: Newspaper,
     featured: true,
     startingPrice: null,
   },
@@ -96,16 +99,16 @@ export const services: Service[] = [
     startingPrice: null,
   },
   {
-    slug: "driving-licence",
-    name: "Driving Licence",
-    summary: "Driving licence paperwork.",
-    icon: Car,
+    slug: "e-stamp-paper",
+    name: "E-Stamp Paper",
+    summary: "E-stamp paper for agreements and legal documents.",
+    icon: Receipt,
     startingPrice: null,
   },
   { slug: "attestation", name: "Attestation", summary: "Document attestation.", icon: BadgeCheck, startingPrice: null },
   { slug: "sale-deed", name: "Sale Deeds", summary: "Sale deed paperwork.", icon: ScrollText, startingPrice: null },
 ];
 
-export const serviceHref = (service: Service) => `/${service.slug}/`;
+export const serviceHref = (service: Service) => `/services/#${service.slug}`;
 export const featuredServices = services.filter((service) => service.featured);
 export const otherServices = services.filter((service) => !service.featured);
