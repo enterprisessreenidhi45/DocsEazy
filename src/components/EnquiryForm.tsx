@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { ID } from "appwrite";
 import { CheckCircle2, Send } from "lucide-react";
@@ -238,7 +239,13 @@ export function EnquiryForm() {
       )}
 
       <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted">We only use your details to reply to this enquiry.</p>
+        <p className="text-sm text-muted">
+          We only use your details to reply to this enquiry. See our{" "}
+          <Link href="/privacy/" className="font-semibold text-amber-deep underline hover:text-navy">
+            privacy notice
+          </Link>
+          .
+        </p>
         <button
           type="submit"
           disabled={status === "sending"}

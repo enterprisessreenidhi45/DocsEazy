@@ -35,7 +35,7 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 2. ✅ About (`/about-us/`) — done; founder name confirmed as B D Krishna in `src/data/about.ts`.
 3. ✅ Contact (`/contact/`) — hero contact card, map embed, enquiry form (`EnquiryForm.tsx`).
 4. 🔶 Services index (`/services/`) — done: every service as a card with an anchor (`id` = slug) and a "Contact us for this document" link to `/contact/#enquiry`. Individual service pages are **not built**: `serviceHref()` points at `/services/#<slug>`, and `public/_redirects` sends the old site's six service URLs to those anchors. If service pages are built later, change `serviceHref()` back and drop those six redirects.
-5. ⬜ Privacy page — not yet built; its footer link was removed so it doesn't 404. Re-add the link in `Footer.tsx` with the page.
+5. ✅ Privacy notice (`/privacy/`) — DPDP Act 2023 notice, copy in `src/data/privacy.ts`, linked from the footer and from the enquiry form's note. Every statement matches how the site works today (no cookies/analytics, self-hosted fonts, Appwrite in Singapore, WhatsApp hand-off, Google Maps embed) — if any of that changes, update `privacy.ts` in the same change. `TODO(owner)`: legal review, retention wording, named contact person.
 6. ⬜ Appwrite backend + notifications — not yet wired.
 7. 🔶 Admin area — login + dashboard UI built with a **temporary demo auth** (see below); real backend not wired.
 
