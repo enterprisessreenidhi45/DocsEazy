@@ -5,8 +5,9 @@ import { useState, type FormEvent } from "react";
 import { ID } from "appwrite";
 import { CheckCircle2, Send } from "lucide-react";
 import { services } from "@/data/services";
-import { whatsappHref } from "@/data/site";
+import { site, whatsappHref } from "@/data/site";
 import { ENQUIRIES_TABLE_ID, APPWRITE_DATABASE_ID, tablesDB } from "@/lib/appwrite";
+import { WhatsAppButton } from "./ContactButtons";
 
 export type Enquiry = {
   name: string;
@@ -19,14 +20,18 @@ export type Enquiry = {
 const EMPTY: Enquiry = { name: "", phone: "", email: "", service: "", message: "" };
 const OTHER_SERVICE = "Not sure / something else";
 
+type Outcome = { saved: boolean; message: string };
+
 /**
  * Persists the enquiry to Appwrite (readable by the admin dashboard) and still opens
  * WhatsApp with it pre-filled — WhatsApp stays the real-time notification path until the
  * business has email/SMS alerts set up, so a lead never depends on only one channel.
- * If the Appwrite write fails (e.g. offline), the enquiry still reaches WhatsApp rather than
- * being lost — this never throws for that reason alone.
+ * If the Appwrite write fails (offline, or the Free-plan project is paused), this does not
+ * throw: it reports `saved: false` so the form can tell the visitor to send the WhatsApp
+ * message, since a popup opened after an `await` can be blocked by the browser.
  */
-async function submitEnquiry(enquiry: Enquiry): Promise<void> {
+async function submitEnquiry(enquiry: Enquiry): Promise<Outcome> {
+  let saved = true;
   try {
     await tablesDB.createRow({
       databaseId: APPWRITE_DATABASE_ID,
@@ -41,6 +46,7 @@ async function submitEnquiry(enquiry: Enquiry): Promise<void> {
       },
     });
   } catch (error) {
+    saved = false;
     console.error("Could not save enquiry to Appwrite:", error);
   }
 
@@ -52,7 +58,9 @@ async function submitEnquiry(enquiry: Enquiry): Promise<void> {
     enquiry.service && `Service: ${enquiry.service}`,
     enquiry.message && `Message: ${enquiry.message}`,
   ].filter(Boolean);
-  window.open(whatsappHref(lines.join("\n")), "_blank", "noopener,noreferrer");
+  const message = lines.join("\n");
+  window.open(whatsappHref(message), "_blank", "noopener,noreferrer");
+  return { saved, message };
 }
 
 type Errors = Partial<Record<keyof Enquiry, string>>;
@@ -76,6 +84,7 @@ export function EnquiryForm() {
   const [values, setValues] = useState<Enquiry>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
+  const [outcome, setOutcome] = useState<Outcome | null>(null);
 
   const update = (field: keyof Enquiry) => (value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -93,7 +102,7 @@ export function EnquiryForm() {
     }
     setStatus("sending");
     try {
-      await submitEnquiry(values);
+      setOutcome(await submitEnquiry(values));
       setStatus("sent");
       setValues(EMPTY);
     } catch {
@@ -110,9 +119,27 @@ export function EnquiryForm() {
           Your enquiry is ready in WhatsApp — press send there and we will call you back with the
           details.
         </p>
+        {outcome && !outcome.saved && (
+          <div
+            role="alert"
+            className="mx-auto mt-6 max-w-md rounded-lg border border-amber bg-white p-4 text-left"
+          >
+            <p className="font-semibold text-navy">
+              We could not save your enquiry on our system just now.
+            </p>
+            <p className="mt-1 text-sm text-muted">
+              Please send it on WhatsApp, or call us on{" "}
+              <span className="whitespace-nowrap">{site.phoneDisplay}</span>, so it reaches us.
+            </p>
+            <WhatsAppButton message={outcome.message} className="mt-4 w-full" />
+          </div>
+        )}
         <button
           type="button"
-          onClick={() => setStatus("idle")}
+          onClick={() => {
+            setOutcome(null);
+            setStatus("idle");
+          }}
           className="mt-6 font-semibold text-amber-deep underline hover:text-navy"
         >
           Send another enquiry

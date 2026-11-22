@@ -49,6 +49,13 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 - Dashboard (`AdminDashboard.tsx`) was simplified from a generic SaaS look (stat cards/charts/sidebar) down to a single `EnquiriesTable`: Sr No / Name / Contact / Service / Details / Status, with working search, status-filter pills, pagination, and a per-row status `<select>` (New / In Progress / Completed) — all local `useState`, nothing persists yet. Sidebar was removed entirely; `Topbar` now just holds the logo + bell/avatar menu.
 - Still blocked on: the Appwrite project existing (who creates it is an open client question), deciding where enquiries get stored (the enquiry form currently only opens WhatsApp — it doesn't persist anything), then replacing the table's sample rows with live reads.
 
+## Appwrite Free-plan pausing (important operational risk)
+
+- Appwrite Free projects are **paused after 7 days with no development activity in the Console**; Appwrite staff say API calls, SDK use and visitor traffic do **not** count (and the logic isn't published). Paused Free projects are **deleted after 90 days**. Only the Pro plan (~$25/month) is guaranteed never to pause. The owner chose to stay on Free.
+- While paused the public site (Netlify) stays up, but enquiries aren't saved and admin login fails. `EnquiryForm.tsx` handles this: `submitEnquiry()` returns `{ saved, message }`, and when `saved` is false the thank-you view shows an amber notice plus a `WhatsAppButton` carrying the enquiry text, so a lead is never lost silently (a popup opened after an `await` can be blocked, a real link can't).
+- **Owner routine:** make a real change in the Appwrite Console at least weekly, and restore the project from the Console if it's paused. Never let it sit paused for 90 days.
+- **Experiment:** `.github/workflows/heartbeat.yml` adds a row to the `heartbeat` table (create-only for anyone, no read access, no secrets) every 3 days. Unproven (it's an API write), so it does not replace the weekly routine. GitHub disables scheduled workflows after 60 days of no repo activity. The third-party `appwrite-keepalive` tool was rejected: its own issue tracker says it no longer works, and it needs a project-wide API key that could read the enquiries table.
+
 ## Open questions for the client
 
 - WhatsApp number same as the phone number? (assumed yes, unconfirmed)

@@ -1,0 +1,26 @@
+# Experimental: Appwrite Free projects pause after 7 days without Console activity, and
+# Appwrite does not say whether API writes count. This adds one row to the `heartbeat` table
+# every 3 days. It needs no secrets: it sends the same public-ID request the website's form does.
+# GitHub disables scheduled workflows after 60 days without repository activity.
+name: Appwrite heartbeat
+
+on:
+  schedule:
+    - cron: "0 3 */3 * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Add a heartbeat row
+        run: |
+          curl --silent --show-error --fail-with-body --max-time 30 \
+            --retry 3 --retry-delay 10 --retry-all-errors \
+            -X POST "https://sgp.cloud.appwrite.io/v1/tablesdb/6af80dc2001d3398d018/tables/heartbeat/rows" \
+            -H "X-Appwrite-Project: 6af8083b002ee2a85211" \
+            -H "Content-Type: application/json" \
+            -d '{"rowId":"unique()","data":{"source":"github-actions"}}'
