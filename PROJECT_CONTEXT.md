@@ -2,7 +2,7 @@
 
 ## What this is
 
-Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a document/paperwork agency in Koramangala, Bengaluru, founded 1997. Next.js **static export** (`output: "export"`), leads-only site: no payments, booking, blog, CMS or content admin — nobody will update content after launch, so copy accuracy matters (legal/government paperwork).
+Rebuild of the DocsEazy site (now **docseazy.in**, served from the owner's Apache host) for **Sreenidhi Enterprises** (trading as "DocsEazy"), a document/paperwork agency in Koramangala, Bengaluru, founded 1997. Next.js **static export** (`output: "export"`), leads-only site: no payments, booking, blog, CMS or content admin — nobody will update content after launch, so copy accuracy matters (legal/government paperwork).
 
 - Deadline: **14 Nov 2026** (assumed from "14", unconfirmed with client). Work started 31 Oct 2026.
 - Hosting: **Cloudflare Pages**, not Vercel (Vercel Hobby is non-commercial-only; a paid build counts as commercial). Cloudflare's free-tier commercial terms weren't separately checked.
@@ -16,7 +16,7 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 
 ## Business facts (single source of truth: `src/data/site.ts`)
 
-- Phone `+91 93437 94351`, email `info@docseazy.com`, address Shop Number 58, Mahakavi Vemana Rd, Koramangala 3 Block, BDA Complex, Bengaluru 560034. Open 7 days, 9am–8pm.
+- Phone `+91 93437 94351`, email `info@docseazy.in` (mailboxes `info@` and `admin@docseazy.in` exist), address Shop Number 58, Mahakavi Vemana Rd, Koramangala 3 Block, BDA Complex, Bengaluru 560034. Open 7 days, 9am–8pm.
 - WhatsApp number currently assumed same as phone — **unconfirmed with owner**.
 - Stats (20,000+ clients, 25+ team, 20+ services), "why choose us" reasons, process steps and testimonials are carried over from the current site (unsupported claims like "lowest price" dropped) — all flagged `TODO(owner)` for reconfirmation.
 - 14 services live in `src/data/services.ts` (Driving Licence dropped; E-Stamp Paper added; the "Change of Name" card is now named "Gazette Notification", slug kept as `change-of-name`).
@@ -54,6 +54,7 @@ Rebuild of docseazy.com for **Sreenidhi Enterprises** (trading as "DocsEazy"), a
 - Appwrite Free projects are **paused after 7 days with no development activity in the Console**; Appwrite staff say API calls, SDK use and visitor traffic do **not** count (and the logic isn't published). Paused Free projects are **deleted after 90 days**. Only the Pro plan (~$25/month) is guaranteed never to pause. The owner chose to stay on Free.
 - While paused the public site (Netlify) stays up, but enquiries aren't saved and admin login fails. `EnquiryForm.tsx` handles this: `submitEnquiry()` returns `{ saved, message }`, and when `saved` is false the thank-you view shows an amber notice plus a `WhatsAppButton` carrying the enquiry text, so a lead is never lost silently (a popup opened after an `await` can be blocked, a real link can't).
 - **Owner routine:** make a real change in the Appwrite Console at least weekly, and restore the project from the Console if it's paused. Never let it sit paused for 90 days.
+- **Allowed Appwrite web platforms (28 Nov 2026):** `docseazy.in`, `www.docseazy.in`, `localhost` — the Free plan's maximum of 3. Appwrite rejects every other origin, so any new hostname means deleting one first. The production site is served from the owner's Apache host, not Netlify.
 - **Experiment:** `.github/workflows/heartbeat.yml` adds a row to the `heartbeat` table (create-only for anyone, no read access, no secrets) every 3 days. Unproven (it's an API write), so it does not replace the weekly routine. GitHub disables scheduled workflows after 60 days of no repo activity. The third-party `appwrite-keepalive` tool was rejected: its own issue tracker says it no longer works, and it needs a project-wide API key that could read the enquiries table.
 
 ## Open questions for the client

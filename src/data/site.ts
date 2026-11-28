@@ -2,13 +2,13 @@
 export const site = {
   name: "DocsEazy",
   legalName: "Sreenidhi Enterprises",
-  url: "https://www.docseazy.com",
+  url: "https://docseazy.in",
   foundedYear: 1997,
   phoneDisplay: "+91 93437 94351",
   phoneHref: "tel:+919343794351",
   // TODO(owner): confirm WhatsApp uses the same number as the phone line.
   whatsappNumber: "919343794351",
-  email: "info@docseazy.com",
+  email: "info@docseazy.in",
   addressLines: ["Shop Number 58, Mahakavi Vemana Rd, Koramangala 3 Block", "BDA Complex, Bengaluru 560034"],
   hours: "Open 7 days, 9:00 AM to 8:00 PM",
 };
